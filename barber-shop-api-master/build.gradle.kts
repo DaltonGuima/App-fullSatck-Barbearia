@@ -36,6 +36,7 @@ dependencies {
 	implementation("org.flywaydb:flyway-core")
 	implementation("org.flywaydb:flyway-database-postgresql")
 	implementation("org.mapstruct:mapstruct:$mapStructVersion")
+	implementation("io.github.cdimascio:dotenv-java:3.0.0")
 
 	compileOnly("org.projectlombok:lombok")
 

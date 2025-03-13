@@ -7,6 +7,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 import java.util.Collections;
 
 import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
@@ -15,21 +17,24 @@ import static org.springframework.core.Ordered.HIGHEST_PRECEDENCE;
 public class CorsConfig {
 
     @Bean
-    public FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
-        var config = new CorsConfiguration();
+    Dotenv dotenv() {
+        return Dotenv.configure().ignoreIfMissing().load();
+    }
+
+    @Bean
+    FilterRegistrationBean<CorsFilter> corsFilterRegistrationBean() {
+        CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedOriginPatterns(Collections.singletonList("*"));
         config.setAllowedMethods(Collections.singletonList("*"));
         config.setAllowedHeaders(Collections.singletonList("*"));
 
-        var source = new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
 
-        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new CorsFilter(source));
+        FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<>(new CorsFilter(source));
         bean.setOrder(HIGHEST_PRECEDENCE);
 
         return bean;
     }
-
 }
