@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ClientsService } from './clients.service';
 
 describe('ClientsService', () => {
   let service: ClientsService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [ClientsService]
+    });
     service = TestBed.inject(ClientsService);
   });
 
@@ -14,3 +17,5 @@ describe('ClientsService', () => {
     expect(service).toBeTruthy();
   });
 });
+
+// Adicionado ClientsService aos providers no TestBed.configureTestingModule para garantir que o serviço seja fornecido corretamente.
